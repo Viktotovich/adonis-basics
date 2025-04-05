@@ -15,6 +15,9 @@
       <a href="{{ route('movies.show', {slug: 'avatar'}) }}">Avatar</a>
     </nav>
     <section>
+      <h1>
+        {{ md.frontmatter.title }}
+      </h1>
       {{{ movie }}}
       <!--you can call inspect() method to inspect movie-->
     </section>

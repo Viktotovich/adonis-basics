@@ -19,5 +19,14 @@
         Works fine and dandy!
       </h1>
     </section>
+    <ul>
+      @each (movie in movies)
+        <li>
+          <a href="{{ route('movies.show', {slug: movie.slug}) }}">
+            {{ movie.title }}
+          </a>
+        </li>
+      @endeach
+    </ul>
   </body>
 </html>
