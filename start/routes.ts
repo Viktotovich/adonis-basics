@@ -7,6 +7,7 @@
 |
 */
 
+import { Exception } from '@adonisjs/core/exceptions'
 import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
 import fs from 'node:fs/promises'
@@ -16,7 +17,18 @@ router.on('/').render('pages/home').as('home')
 router
   .get('/movies/:slug', async (ctx) => {
     const url = app.makeURL(`resources/movies/${ctx.params.slug}.html`)
-    const movie = await fs.readFile(url, 'utf-8')
-    return ctx.view.render('pages/movies', { movie })
+
+    try {
+      const movie = await fs.readFile(url, 'utf-8')
+      ctx.view.share({ movie })
+    } catch (err) {
+      throw new Exception(`Could not find a movie called ${ctx.params.slug}`, {
+        code: 'E_NOT_FOUND', // E === Error
+        status: 404,
+      })
+    }
+
+    return ctx.view.render('pages/movies/show')
   })
   .as('movies.show')
+  .where('slug', router.matchers.slug())
