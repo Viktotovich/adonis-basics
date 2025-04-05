@@ -6,10 +6,10 @@
     <title>
       Movies page
     </title>
-    @vite('resources/js/app.js')
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
   </head>
   <body>
-    <nav>
+    <nav class="bg-blue-50">
       <a href="{{ route('home') }}">Home</a>
       <a href="{{ route('movies.show', {slug: 'my-awesome-movie'}) }}">My Awesome Movie</a>
       <a href="{{ route('movies.show', {slug: 'avatar'}) }}">Avatar</a>
