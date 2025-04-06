@@ -8,23 +8,30 @@ To understand the # syntax better
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties
 */
 
+import redis from '@adonisjs/redis/services/main'
+
 class CacheService {
-  #store: Record<string, any> = {}
-
-  has(key: string) {
-    return key in this.#store
+  async has(...keys: string[]) {
+    return await redis.exists(keys)
   }
 
-  get(key: string) {
-    return this.#store[key]
+  async get(key: string) {
+    //redis stores everything as a string, even objs
+    const value = await redis.get(key)
+    //return null, or parse. TS barks otherwise
+    return value && JSON.parse(value)
   }
 
-  set(key: string, value: any) {
-    this.#store[key] = value
+  async set(key: string, value: any) {
+    return await redis.set(key, JSON.stringify(value))
   }
 
-  delete(key: string) {
-    delete this.#store[key]
+  async delete(...keys: string[]) {
+    return await redis.del(keys)
+  }
+
+  async flushDb() {
+    return await redis.flushdb()
   }
 }
 
