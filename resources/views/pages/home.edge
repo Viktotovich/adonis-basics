@@ -9,24 +9,23 @@
     @vite(['resources/js/app.js', 'resources/css/app.css'])
   </head>
   <body>
-    <nav class="bg-blue-50">
-      <a href="{{ route('home') }}">Home</a>
-      <a href="{{ route('movies.show', {slug: 'my-awesome-movie'}) }}">My Awesome Movie</a>
-      <a href="{{ route('movies.show', {slug: 'avatar'}) }}">Avatar</a>
-    </nav>
+    @include('partials/nav')
     <section>
       <h1>
         Works fine and dandy!
       </h1>
+      <ul class="flex flex-col gap-4">
+        @each (movie in movies)
+          <li>
+            <a href="{{ route('movies.show', {slug: movie.slug}) }}" class="font-bold">
+              {{ movie.title }}
+            </a>
+            <p class="text-slate-600">
+              {{ truncate(movie.summary, 50, { completeWords: true }) }}
+            </p>
+          </li>
+        @endeach
+      </ul>
     </section>
-    <ul>
-      @each (movie in movies)
-        <li>
-          <a href="{{ route('movies.show', {slug: movie.slug}) }}">
-            {{ movie.title }}
-          </a>
-        </li>
-      @endeach
-    </ul>
   </body>
 </html>

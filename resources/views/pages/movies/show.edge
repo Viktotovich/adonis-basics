@@ -9,16 +9,21 @@
     @vite(['resources/js/app.js', 'resources/css/app.css'])
   </head>
   <body>
-    <nav class="bg-blue-50">
-      <a href="{{ route('home') }}">Home</a>
-      <a href="{{ route('movies.show', {slug: 'my-awesome-movie'}) }}">My Awesome Movie</a>
-      <a href="{{ route('movies.show', {slug: 'avatar'}) }}">Avatar</a>
-    </nav>
+    @include('partials/nav')
     <section>
       <h1>
         {{ movie.title }}
       </h1>
-      {{{ movie.abstract }}}
+
+      @if (movie.abstract)
+        <div class="my-8 py-8 px-4 bg-slate-100 rounded-xl ">
+          {{{ movie.abstract }}}
+        </div>
+      @else
+        <p>
+          No abstract
+        </p>
+      @endif
       <!--you can call inspect() method to inspect movie-->
     </section>
   </body>
