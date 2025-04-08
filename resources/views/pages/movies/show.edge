@@ -1,4 +1,8 @@
-@layout()
+@layout({ title: movie.title })
+  @slot('meta')
+    <meta name="description" content="{{ movie.summary }}" />
+  @endslot
+  
   <section>
     <h1>
       {{ movie.title }}

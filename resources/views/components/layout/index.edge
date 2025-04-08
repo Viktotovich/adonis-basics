@@ -4,8 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>
-      Adonis JS basics - First Proper Start
+      {{ title || 'Adonis JS basics' }}
     </title>
+
+    @if ($slots.meta)
+      {{{ await $slots.meta() }}}
+    @endif
+    
     @vite(['resources/js/app.js', 'resources/css/app.css'])
   </head>
   <body>
