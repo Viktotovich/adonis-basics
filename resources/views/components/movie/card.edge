@@ -1,7 +1,6 @@
-<div
-  class="{{ html.classNames(['rounded-lg overflow-hidden border border-neutral-200/60 bg-white text-neutral-700 shadow-sm', $props.class || '']) }}"
-  {{ $props.except(['movie', 'class']).toAttrs() }}
->
+@let(className = 'rounded-lg overflow-hidden border border-neutral-200/60 bg-white text-neutral-700 shadow-sm')
+
+<div {{ $props.merge({ class: [className]}).except(['movie']).toAttrs() }}>
   <div class="relative">
     <img src="https://picsum.photos/450/200?v={{ movie.slug }}" class="w-full h-auto" />
   </div>
