@@ -19,5 +19,9 @@ router
   .as('movies.show')
   .where('slug', router.matchers.slug())
 
-router.post('/redis/flush', [RedisController, 'flush']).as('redis.flush')
+//We spoof a delete call thanks to Adonis, app.ts line 20 true
+//action="{{ route('redis.flush', {//route params}, { qs: {_method: 'DELETE'}}) }}"
+// qs >> sets the method, qs = QueryString
+//POST http://127.0.0.1:3333/redis/flush?_method=DELETE
+router.delete('/redis/flush', [RedisController, 'flush']).as('redis.flush')
 router.delete('/redis/:slug', [RedisController, 'destroy']).as('redis.destroy')
