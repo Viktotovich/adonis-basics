@@ -23,6 +23,7 @@ export default class extends BaseSeeder {
       const movie = movies[index]
       const released = DateTime.now().set({ year: movie.releaseYear })
 
+      row.statusId = MovieStatuses.RELEASED
       row.title = movie.title
       row.releasedAt = DateTime.fromJSDate(
         faker.date.between({
@@ -34,6 +35,7 @@ export default class extends BaseSeeder {
       index++
     }).createMany(movies.length)
 
+    await MovieFactory.createMany(3)
     await MovieFactory.apply('released').createMany(2)
     await MovieFactory.apply('releasingSoon').createMany(2)
     await MovieFactory.apply('postProduction').createMany(2)
