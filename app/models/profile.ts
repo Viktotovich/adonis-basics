@@ -19,8 +19,6 @@ export default class Profile extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @belongsTo(() => User, {
-    foreignKey: 'userId',
-  })
+  @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
 }

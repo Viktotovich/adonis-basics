@@ -39,8 +39,6 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 
-  @hasOne(() => Profile, {
-    foreignKey: 'userId',
-  })
+  @hasOne(() => Profile)
   declare profile: HasOne<typeof Profile>
 }
