@@ -11,6 +11,9 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   passwordColumnName: 'password',
 })
 
+//Further reading:
+//https://www.typescriptlang.org/docs/handbook/decorators.html
+//https://mirone.me/a-complete-guide-to-typescript-decorator/
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
   declare id: number
