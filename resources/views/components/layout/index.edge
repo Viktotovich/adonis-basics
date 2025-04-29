@@ -18,6 +18,8 @@
       @include('partials/nav')
     </div>
 
-    {{{ await $slots.main() }}}
+    <section class="mx-10">
+      {{{ await $slots.main() }}}
+    </section>
   </body>
 </html>
