@@ -14,6 +14,7 @@ const RedisController = () => import('#controllers/redis_controller')
 const DirectorsController = () => import('#controllers/directors_controller')
 const WritersController = () => import('#controllers/writers_controller')
 const RegisterController = () => import('#controllers/auth/register_controller')
+const LoginController = () => import('#controllers/auth/login_controller')
 
 router.get('/', [MoviesController, 'index']).as('home')
 
@@ -37,11 +38,15 @@ router.get('/writers/:id', [WritersController, 'show']).as('writers.show')
 router.delete('/redis/flush', [RedisController, 'flush']).as('redis.flush')
 router.delete('/redis/:slug', [RedisController, 'destroy']).as('redis.destroy')
 
-//RegisterRouter
+//AuthRouter
 router
   .group(() => {
+    //RegisterRouter
     router.get('/register', [RegisterController, 'show']).as('register.show')
     router.post('/register', [RegisterController, 'store']).as('register.store')
+    //LoginRouter
+    router.get('/login', [LoginController, 'show']).as('login.show')
+    router.post('/login', [LoginController, 'store']).as('login.store')
   })
   .prefix('/auth')
   .as('auth')
