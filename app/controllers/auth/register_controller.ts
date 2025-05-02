@@ -7,7 +7,7 @@ export default class RegisterController {
     return view.render('pages/auth/register')
   }
 
-  async store({ request, response }: HttpContext) {
+  async store({ request, response, auth }: HttpContext) {
     //VineJS knows exactly what to return and validate
     // 1. Grab our request and validate it
     const data = await request.validateUsing(registerValidator)
@@ -15,9 +15,12 @@ export default class RegisterController {
     // 2. Create our user
     // Adonis will handle validation errors automatically
     const user = await User.create(data)
-    console.log({ user: user.serialize() })
 
-    // 3. Login that user
+    /* 3. Login that user >> Adonis's built in hasher hashes the password with scrypt 
+    pre-set. All we need to do is use the auth.use() method available to us, chained 
+    with .login() method */
+    await auth.use('web').login(user)
+
     // 4. Return the user back to home
 
     return response.redirect().toRoute('home')
