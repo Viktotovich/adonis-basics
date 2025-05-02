@@ -8,6 +8,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
 //Lazy import, forced by the eslint
 const MoviesController = () => import('#controllers/movies_controller')
 const RedisController = () => import('#controllers/redis_controller')
@@ -42,11 +43,20 @@ router.delete('/redis/:slug', [RedisController, 'destroy']).as('redis.destroy')
 router
   .group(() => {
     //RegisterRouter
-    router.get('/register', [RegisterController, 'show']).as('register.show')
-    router.post('/register', [RegisterController, 'store']).as('register.store')
+    router
+      .get('/register', [RegisterController, 'show'])
+      .as('register.show')
+      .use(middleware.guest())
+
+    router
+      .post('/register', [RegisterController, 'store'])
+      .as('register.store')
+      .use(middleware.guest())
+
     //LoginRouter
-    router.get('/login', [LoginController, 'show']).as('login.show')
-    router.post('/login', [LoginController, 'store']).as('login.store')
+    router.get('/login', [LoginController, 'show']).as('login.show').use(middleware.guest())
+
+    router.post('/login', [LoginController, 'store']).as('login.store').use(middleware.guest())
   })
   .prefix('/auth')
   .as('auth')
