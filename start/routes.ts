@@ -16,6 +16,7 @@ const DirectorsController = () => import('#controllers/directors_controller')
 const WritersController = () => import('#controllers/writers_controller')
 const RegisterController = () => import('#controllers/auth/register_controller')
 const LoginController = () => import('#controllers/auth/login_controller')
+const LogoutController = () => import('#controllers/auth/logout_controller')
 
 router.get('/', [MoviesController, 'index']).as('home')
 
@@ -57,6 +58,10 @@ router
     router.get('/login', [LoginController, 'show']).as('login.show').use(middleware.guest())
 
     router.post('/login', [LoginController, 'store']).as('login.store').use(middleware.guest())
+
+    //LogoutRouter
+    //user must be authenticated to hit the route
+    router.post('/logout', [LogoutController, 'handle']).as('logout').use(middleware.auth())
   })
   .prefix('/auth')
   .as('auth')

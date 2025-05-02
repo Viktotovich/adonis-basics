@@ -7,7 +7,10 @@
 
   <div>
     @if (auth.user)
-      {{ auth.user.fullName }}
+      <form method="POST" action="{{ route('auth.logout') }}">
+        {{ csrfField() }}
+        <button type="submit">Logout {{ auth.user.fullName }}</button>
+      </form>
     @else
       <a class="mr-3" href="{{ route('auth.login.show') }}">Login</a>
       <a href="{{ route('auth.register.show') }}">Register</a>
