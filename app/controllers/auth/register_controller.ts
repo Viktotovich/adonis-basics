@@ -8,12 +8,13 @@ export default class RegisterController {
   }
 
   async store({ request, response }: HttpContext) {
-    // 1. Grab our request
-    const data = request.only(['fullName', 'email', 'password'])
+    //VineJS knows exactly what to return and validate
+    // 1. Grab our request and validate it
+    const data = await request.validateUsing(registerValidator)
+
     // 2. Create our user
     // Adonis will handle validation errors automatically
-    const validatedData = await registerValidator.validate(data)
-    const user = await User.create(validatedData)
+    const user = await User.create(data)
     console.log({ user: user.serialize() })
 
     // 3. Login that user
