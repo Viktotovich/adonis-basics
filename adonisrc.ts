@@ -51,6 +51,7 @@ export default defineConfig({
     () => import('#start/routes'),
     () => import('#start/kernel'),
     () => import('#start/start'),
+    () => import('#start/rules/unique'),
   ],
 
   /*
