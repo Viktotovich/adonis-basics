@@ -65,3 +65,23 @@ router
   })
   .prefix('/auth')
   .as('auth')
+
+/*Side note:
+    The .use(middleware.guest()) means that only users who are guests (unauthed), can 
+    view the routes that the method is chained on.
+
+    If a logged in / authed user tries to hit the /login endpoint, they will
+    be re-directed back home: because they are not a guest()
+  */
+
+router
+  .group(() => {
+    router
+      .get('/', async (ctx) => {
+        return `You are here, ${ctx.auth.user?.fullName} as ${ctx.auth.user?.roleId} role`
+      })
+      .as('index')
+  })
+  .prefix('/admin')
+  .as('admin')
+  .use(middleware.admin())
