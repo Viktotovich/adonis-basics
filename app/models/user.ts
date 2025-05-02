@@ -6,16 +6,22 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import Profile from './profile.js'
 import type { BelongsTo, HasOne } from '@adonisjs/lucid/types/relations'
 import Role from './role.js'
+import { DbRememberMeTokensProvider } from '@adonisjs/auth/session'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
 })
 
-//Further reading:
-//https://www.typescriptlang.org/docs/handbook/decorators.html
-//https://mirone.me/a-complete-guide-to-typescript-decorator/
+/*Further reading:
+  1- https://www.typescriptlang.org/docs/handbook/decorators.html
+  2- https://mirone.me/a-complete-guide-to-typescript-decorator/
+  3- https://www.typescripttutorial.net/typescript-tutorial/typescript-static-methods-and-properties/
+*/
+
 export default class User extends compose(BaseModel, AuthFinder) {
+  static rememberMeTokens = DbRememberMeTokensProvider.forModel(User)
+
   @column({ isPrimary: true })
   declare id: number
 
