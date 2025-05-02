@@ -10,7 +10,7 @@ import { ModelObject } from '@adonisjs/lucid/types/model'
 import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
-  static environment = ['development', 'testing']
+  static environment = ['development']
   titles: string[] = [
     'Camera Operator',
     'Art Director',
